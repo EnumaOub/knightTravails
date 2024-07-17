@@ -1,7 +1,7 @@
 class KnightNode {
-    constructor(coordinate) {
+    constructor(coordinate, oldPath = [] ) {
         this.coord = coordinate;
-        this.path = [coordinate];
+        this.path = [...oldPath, coordinate];
     }
 
     updateNode(coordinate) {
