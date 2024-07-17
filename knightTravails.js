@@ -1,4 +1,4 @@
-class knightNode {
+class KnightNode {
     constructor(coordinate) {
         this.coord = coordinate;
         this.path = [coordinate];
@@ -32,7 +32,7 @@ function knightTravails () {
 
     const checkCoordinate = function(coord) {
         if (!forbiddenMovement(coord)) {
-            console.log(`The Coordinates: ${coord} are not right`);
+            console.log(`The Coordinates: ${coord} are out of range`);
             return false;
         };
         return true;
@@ -43,10 +43,23 @@ function knightTravails () {
             return null;
         }
         else {
-            return knightMovement(coordInit);
+            let currentKnightNode = new KnightNode(coordInit);
+            const queue = [currentKnightNode];
+            let actualMove;
+            while (queue.length > 0) {
+                actualMove = queue.pop();
+                if (actualMove.coord.toString() === coordFin.toString()) {
+                    console.log(`You made it in ${actualMove.path.length} moves!  Here's your path:`)
+                    actualMove.path.forEach((coord) => console.log(coord));
+                }
+                else {
+                    knightMovement(actualMove.coord).forEach((move) => {
+                        console.log(move)
+                    })
+                };
+            }
+            return actualMove;
         }
-
-
     }
 
     return {
@@ -58,4 +71,5 @@ const knightMvt = knightTravails()
 console.log(knightMvt.getPath([5,6], [9,6]))
 console.log(knightMvt.getPath([5,15], [4,1]))
 console.log(knightMvt.getPath([5,15], [9,6]))
+console.log(knightMvt.getPath([5,6], [5,6]))
 console.log(knightMvt.getPath([5,6], [4,1]))
