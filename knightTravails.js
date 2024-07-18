@@ -34,6 +34,23 @@ function knightTravails () {
         return true;
     };
 
+    const showBoard = function(node) {
+        const board = Array.from({length: 8}, () => new Array(8).fill('.'))
+        let i = 0;
+        node.path.forEach((coord) => {
+            const [x, y] = JSON.parse(`[${coord}]`)
+            board[x][y] = i;
+            i++;
+        })
+        i = 0;
+        console.log([' '].concat(Array.from(Array(8).keys())).toString().replace(/,/g,' '));
+        board.forEach((line) => {
+            console.log(`${i} ${line.toString().replace(/,/g,' ')}`)
+            i++;
+        }
+        )
+    };
+
     const getPath = function(coordInit, coordFin) {
         if (!checkCoordinate(coordInit) || !checkCoordinate(coordFin)) {
             return null;
@@ -57,6 +74,8 @@ function knightTravails () {
                             process.stdout.write(` [${coord}] -> `);
                         }
                     });
+                    console.log("\nBoard\n")
+                    showBoard(actualMove);
                     console.log("\n\n")
                     return actualMove;
                 }
