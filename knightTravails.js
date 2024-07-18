@@ -1,13 +1,9 @@
 class KnightNode {
     constructor(coordinate, oldPath = [] ) {
         this.coord = coordinate;
-        this.path = [...oldPath, coordinate];
+        this.path = [...oldPath, coordinate.toString()];
     }
 
-    updateNode(coordinate) {
-        this.coord = coordinate;
-        this.path.concat(coordinate);
-    }
 };
 
 function knightTravails () {
@@ -47,14 +43,19 @@ function knightTravails () {
             const queue = [currentKnightNode];
             let actualMove;
             while (queue.length > 0) {
-                actualMove = queue.pop();
+                actualMove = queue.shift();
                 if (actualMove.coord.toString() === coordFin.toString()) {
-                    console.log(`You made it in ${actualMove.path.length} moves!  Here's your path:`)
+                    console.log(`You made it in ${actualMove.path.length - 1 } moves!  Here's your path:`)
                     actualMove.path.forEach((coord) => console.log(coord));
+                    return actualMove;
                 }
                 else {
                     knightMovement(actualMove.coord).forEach((move) => {
-                        console.log(move)
+                        if (!(actualMove.path.includes(move.toString()))){
+                            const newKnightNode = new KnightNode(move, actualMove.path);
+                            queue.push(newKnightNode);
+                        }
+                        
                     })
                 };
             }
@@ -71,5 +72,9 @@ const knightMvt = knightTravails()
 console.log(knightMvt.getPath([5,6], [9,6]))
 console.log(knightMvt.getPath([5,15], [4,1]))
 console.log(knightMvt.getPath([5,15], [9,6]))
-console.log(knightMvt.getPath([5,6], [5,6]))
-console.log(knightMvt.getPath([5,6], [4,1]))
+knightMvt.getPath([5,6], [5,6])
+knightMvt.getPath([5,6], [4,1])
+knightMvt.getPath([3,3],[4,3])
+knightMvt.getPath([0,0],[3,3])
+knightMvt.getPath([3,3],[0,0])
+knightMvt.getPath([0,0],[7,7])
