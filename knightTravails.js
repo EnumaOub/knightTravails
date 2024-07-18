@@ -46,7 +46,18 @@ function knightTravails () {
                 actualMove = queue.shift();
                 if (actualMove.coord.toString() === coordFin.toString()) {
                     console.log(`You made it in ${actualMove.path.length - 1 } moves!  Here's your path:`)
-                    actualMove.path.forEach((coord) => console.log(coord));
+                    actualMove.path.forEach((coord) => {
+                        if (coord === coordInit.toString()){
+                            process.stdout.write(`Starting coordinates: [${coord}] ->`);
+                        }
+                        else if (coord === coordFin.toString()){
+                            process.stdout.write(`Ending coordinate: [${coord}]`);
+                        }
+                        else {
+                            process.stdout.write(` [${coord}] -> `);
+                        }
+                    });
+                    console.log("\n\n")
                     return actualMove;
                 }
                 else {
@@ -59,6 +70,7 @@ function knightTravails () {
                     })
                 };
             }
+            
             return actualMove;
         }
     }
